@@ -1,6 +1,8 @@
+using namespace std;
+
 int main(){
 
-    std:: cout << "hola mundo" << std::endl;
+    cout << "hola mundo" <<endl;
 
     return 0;
 }
