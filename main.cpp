@@ -37,6 +37,12 @@ int main()
 
     leerArch.close();
 
+    string grafo;
+    cout <<"Ingresa el nodo destino (letra, ej. F): " << endl;
+    cin >> grafo;
+
+    int inicio = 0;
+
     
 
 
