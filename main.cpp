@@ -14,7 +14,7 @@ int main()
     cout <<nombre << endl;
 
     ifstream leerArch;
-    leerArch.open();
+    leerArch.open(nombre);
     if(!leerArch.is_open()){
         cerr << "No se pudo abrir el archivo." << endl;
         return 1;
