@@ -7,7 +7,11 @@ using namespace std;
 
 int main()
 {
-    cout<<"hola mundo"<< endl;
+    string nombre;
+    cout <<"nombre del archivo: " << endl;
+    cin >> nombre;
+
+    cout <<nombre << endl;
 
     return 0;
 }
