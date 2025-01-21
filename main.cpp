@@ -11,8 +11,6 @@ int main()
     cout <<"nombre del archivo(" "nombre.txt" "): " << endl;
     cin >> nombre;
 
-    cout <<nombre << endl;
-
     ifstream leerArch;
     leerArch.open(nombre);
     if(!leerArch.is_open()){
@@ -27,13 +25,9 @@ int main()
     int matriz[n][n];
 
     for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            if (j < n - 1) {
+        for (int j = 0; j < n - 1; ++j) {
                 leerArch >> matriz[i][j];
                 leerArch.ignore(1, ','); 
-            } else {
-                leerArch >> matriz[i][j]; 
-            }
         }
     }
 
