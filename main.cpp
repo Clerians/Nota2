@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
     string nombre;
-    cout <<"nombre del archivo(" "nombre.txt" "): " << endl;
+    cout <<"nombre del archivo(nombre.txt): " << endl;
     cin >> nombre;
 
     ifstream leerArch;
@@ -37,13 +37,8 @@ int main()
 
     leerArch.close();
 
-    cout << "Contenido de la matriz:" << endl;
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            cout << matriz[i][j] << " ";
-        }
-        cout << endl;
-    }
+    
+
 
     return 0;
 }
