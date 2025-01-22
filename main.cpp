@@ -1,20 +1,21 @@
 #include <iostream>
 #include <fstream>
-#include <vector> 
+#include <vector>
 #include <sstream>
 
 using namespace std;
 
-class Nodo{
-    public:
-    pair<char,int> nombres;
+class Nodo {
+public:
+    pair<char, int> nombres;
     vector<pair<Nodo*, int>> vecinos;
-    Nodo(char nombre, int peso){
-        nombres = {nombre,peso};
+
+    Nodo(char nombre, int peso) {
+        nombres = {nombre, peso};
     }
 };
 
-Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista, vector<bool>& visitado){
+Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista, vector<bool>& visitado) {
     Nodo* raiz = lista[0];
     visitado[0] = true;
 
@@ -26,12 +27,11 @@ Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista, vecto
             armarArbol(n, matriz, lista, visitado);
         }
     }
-
     return raiz;
 }
 
-void imprimir(Nodo* nodo, string letra){
-    if(nodo == nullptr) return;
+void imprimir(Nodo* nodo, string letra) {
+    if (nodo == nullptr) return;
 
     cout << letra << nodo->nombres.first << " Peso: " << nodo->nombres.second << endl;
     for (size_t i = 0; i < nodo->vecinos.size(); ++i) {
@@ -39,22 +39,19 @@ void imprimir(Nodo* nodo, string letra){
     }
 }
 
-//void dijkstra(){}
-
-int main()
-{
+int main() {
     string nombre;
     ifstream leerArch;
 
-    while(true){
-        cout <<"nombre del archivo(nombre.txt): " << endl;
+    while (true) {
+        cout << "Nombre del archivo (nombre.txt): " << endl;
         cin >> nombre;
         leerArch.open(nombre);
 
-        if(leerArch.is_open()){
+        if (leerArch.is_open()) {
             break;
-        }else{
-            cerr << "No se encontro el txt. Intente otra vez." << endl;
+        } else {
+            cerr << "No se encontró el archivo. Intente otra vez." << endl;
             leerArch.clear();
         }
     }
@@ -65,38 +62,31 @@ int main()
 
     vector<vector<int>> matriz(n, vector<int>(n));
 
+    // Leer la matriz desde el archivo
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (j < n - 1) {
                 leerArch >> matriz[i][j];
-                leerArch.ignore(1, ','); 
+                leerArch.ignore(1, ',');
             } else {
-                leerArch >> matriz[i][j]; 
+                leerArch >> matriz[i][j];
             }
         }
     }
 
     leerArch.close();
 
-    
     vector<Nodo*> lista;
-
-    for(int i = 0; i < n; ++i){
+    for (int i = 0; i < n; ++i) {
         char nodo = 'A' + i;
-        lista.push_back(new Nodo(nodo,0));
-    } 
+        lista.push_back(new Nodo(nodo, 0));
+    }
 
     vector<bool> visitado(n, false);
-    Nodo* arbol = armarArbol(n,matriz,lista,visitado);
+    Nodo* arbol = armarArbol(n, matriz, lista, visitado);
 
-     cout << "Árbol a partir del nodo A:" << endl;
-     imprimir(arbol," ");
-
-    //string letra;
-    //cout <<"Ingresa el nodo destino (letra, ej. A-" << char('A' + n - 1) << "): ";
-    //cin >> letra;
-
-    //int final = letras - 'A';
+    cout << "Árbol a partir del nodo A:" << endl;
+    imprimir(arbol, "");
 
     return 0;
 }
