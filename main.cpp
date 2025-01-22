@@ -5,6 +5,14 @@
 
 using namespace std;
 
+class Nodo{
+    public:
+    char nombre;
+    int peso;
+    vector<pair<Nodo*, int>> vecinos;
+};
+
+
 int main()
 {
     string nombre;
