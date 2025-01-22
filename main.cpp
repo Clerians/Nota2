@@ -21,41 +21,45 @@ void dijkstra(){
 int main()
 {
     string nombre;
-    cout <<"nombre del archivo(nombre.txt): " << endl;
-    cin >> nombre;
-
     ifstream leerArch;
-    leerArch.open(nombre);
-    if(!leerArch.is_open()){
-        cerr << "No se pudo abrir el archivo." << endl;
-        return 1;
-    }else{
-        int n;
-        leerArch >> n;
-        leerArch.ignore();
 
-        int matriz[n][n];
+    while(true){
+        cout <<"nombre del archivo(nombre.txt): " << endl;
+        cin >> nombre;
+        leerArch.open(nombre);
 
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (j < n - 1) {
-                    leerArch >> matriz[i][j];
-                    leerArch.ignore(1, ','); 
-                } else {
-                    leerArch >> matriz[i][j]; 
-                }
+        if(leerArch.is_open()){
+            break;
+        }else{
+            cerr << "No se encontro el txt. Intente otra vez." << endl;
+            leerArch.clear();
+        }
+    }
+
+    int n;
+    leerArch >> n;
+    leerArch.ignore();
+
+    int matriz[n][n];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (j < n - 1) {
+                leerArch >> matriz[i][j];
+                leerArch.ignore(1, ','); 
+            } else {
+                leerArch >> matriz[i][j]; 
             }
         }
-
-        leerArch.close();
-
-        string grafo;
-        cout <<"Ingresa el nodo destino (letra, ej. F): " << endl;
-        cin >> grafo;
-
-        int inicio = 0;
-
     }
+
+    leerArch.close();
+
+    string grafo;
+    cout <<"Ingresa el nodo destino (letra, ej. F): " << endl;
+    cin >> grafo;
+
+    int inicio = 0;
 
     return 0;
 }
