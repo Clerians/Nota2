@@ -82,11 +82,11 @@ int main() {
         lista.push_back(new Nodo(nodo, 0));
     }
 
-    vector<bool> visitado(n, false);
-    Nodo* arbol = armarArbol(n, matriz, lista, visitado);
-
-    cout << "Árbol a partir del nodo A:" << endl;
-    imprimir(arbol, "");
+    cout << "Nodos existentes:" << endl;
+    for(int i = 0; i < n; i++){
+        cout << lista->vecinos[i].first << " ";
+    }
+    cout << endl;
 
     return 0;
 }
