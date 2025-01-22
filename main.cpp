@@ -15,7 +15,7 @@ class Nodo{
 };
 
 void dijkstra(){
-    
+
 }
 
 int main()
@@ -29,35 +29,33 @@ int main()
     if(!leerArch.is_open()){
         cerr << "No se pudo abrir el archivo." << endl;
         return 1;
-    }
+    }else{
+        int n;
+        leerArch >> n;
+        leerArch.ignore();
 
-    int n;
-    leerArch >> n;
-    leerArch.ignore();
+        int matriz[n][n];
 
-    int matriz[n][n];
-
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            if (j < n - 1) {
-                leerArch >> matriz[i][j];
-                leerArch.ignore(1, ','); 
-            } else {
-                leerArch >> matriz[i][j]; 
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (j < n - 1) {
+                    leerArch >> matriz[i][j];
+                    leerArch.ignore(1, ','); 
+                } else {
+                    leerArch >> matriz[i][j]; 
+                }
             }
         }
+
+        leerArch.close();
+
+        string grafo;
+        cout <<"Ingresa el nodo destino (letra, ej. F): " << endl;
+        cin >> grafo;
+
+        int inicio = 0;
+
     }
-
-    leerArch.close();
-
-    string grafo;
-    cout <<"Ingresa el nodo destino (letra, ej. F): " << endl;
-    cin >> grafo;
-
-    int inicio = 0;
-
-    
-
 
     return 0;
 }
