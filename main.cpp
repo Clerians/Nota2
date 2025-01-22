@@ -14,23 +14,32 @@ class Nodo{
     }
 };
 
-Nodo* armarArbol(int n, int matriz[][],vector<Nodo*>& lista){
+Nodo* armarArbol(int n, int matriz[100][100], vector<Nodo*>& lista, vector<bool>& visitado){
     Nodo* raiz = lista[0];
+    visitado[0] = true;
 
     for(int i = 0; i < n ; ++i){
-        if(matriz[0][i] > 0){
+        if(matriz[0][i] > 0 %% !visitado[i]){
             Nodo* hijo = armarArbol(n,matriz,lista);
-            raiz->vecinos.puch_back({hijo,matriz[0][i]});
+            raiz->vecinos.push_back({hijo,matriz[0][i]});
         }
     }
+
+    visitado[0] = false;
+
     return raiz;
 }
 
-void imprimir(Nodo* nodo, string letra){
+void imprimir(Nodo* nodo){
     if(nodo == nullptr) return;
 
-    cout <<nodo->nombres.first << " Peso: " << nodo->nombres.second << endl;
-    imprimir(vecinos.first, " ");
+    cout <<nodo->nombres.first <<": "<< endl;
+    for(int i = 0; i < nodo->vecinos.size(); ++i){
+        Nodo* vecino = nodo->vecinos[i].first; 
+        int peso = nodo->vecinos[i].second;
+        cout << "  -> " << vecino->nombres.first << " Peso: " << peso << endl;
+        imprimir(vecino);
+    }
 }
 
 //void dijkstra(){}
@@ -72,12 +81,12 @@ int main()
 
     leerArch.close();
 
-
+    vector<bool> visitado(n, false);
     vector<Nodo*> lista;
 
     for(int i = 0; i < n; ++i){
         char nodo = 'A' + i;
-        lista.puch_back(new Nodo(nodo,0));
+        lista.push_back(new Nodo(nodo,0));
     } 
 
     Nodo* arbol = armarArbol(n,matriz,lista);
