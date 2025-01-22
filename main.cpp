@@ -7,11 +7,16 @@ using namespace std;
 
 class Nodo{
     public:
-    char nombre;
-    int peso;
+    pair<char,int> nombres;
     vector<pair<Nodo*, int>> vecinos;
+    Nodo(char nombre, int peso){
+        nombres = {nombre,peso};
+    }
 };
 
+void dijkstra(){
+    
+}
 
 int main()
 {
