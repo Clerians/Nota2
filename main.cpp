@@ -30,43 +30,43 @@ Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista) {
     return lista[0];
 }
 
-vector<char> dijkstra(Nodo* inicio, Nodo* fin, int n) {
-    vector<int> distancias(n, INT_MAX);
-    vector<Nodo*> previos(n, nullptr);
-    distancias[inicio->nombres.first - 'A'] = 0;
+pair<vector<char>, int> dijkstra(Nodo* inicio, Nodo* fin, int n) {
+    vector<int> distancia(n, 1000000);
+    vector<Nodo*> visitados(n, nullptr);
+    distancia[inicio->nombres.first - 'A'] = 0;
     
-    queue<Nodo*> q;
-    q.push(inicio);
+    queue<Nodo*> cola;
+    cola.push(inicio);
 
-    while (!q.empty()) {
-        Nodo* nodoActual = q.front();
-        q.pop();
+    while (!cola.empty()) {
+        Nodo* aux = cola.front();
+        cola.pop();
 
-        for (int i = 0; i < nodoActual->vecinos.size(); i++) {
-            Nodo* nodoVecino = nodoActual->vecinos[i].first;
-            int peso = nodoActual->vecinos[i].second;
-            int indiceVecino = nodoVecino->nombres.first - 'A';
+        for (int i = 0; i < aux->vecinos.size(); i++) {
+            Nodo* siguiente = aux->vecinos[i].first;
+            int peso = aux->vecinos[i].second;
+            int indiceSiguiente = siguiente->nombres.first - 'A';
 
-            if (distancias[nodoActual->nombres.first - 'A'] + peso < distancias[indiceVecino]) {
-                distancias[indiceVecino] = distancias[nodoActual->nombres.first - 'A'] + peso;
-                previos[indiceVecino] = nodoActual;
-                q.push(nodoVecino);
+            if (distancia[aux->nombres.first - 'A'] + peso < distancia[indiceSiguiente]) {
+                distancia[indiceSiguiente] = distancia[aux->nombres.first - 'A'] + peso;
+                visitados[indiceSiguiente] = aux;
+                cola.push(siguiente);
             }
         }
     }
 
-    vector<char> camino;
-    for (Nodo* at = fin; at != nullptr; at = previos[at->nombres.first - 'A']) {
-        camino.push_back(at->nombres.first);
+    vector<char> recorrido;
+    for (Nodo* a = fin; a != nullptr; a = visitados[a->nombres.first - 'A']) {
+        recorrido.push_back(a->nombres.first);
     }
 
-    // Invertir el camino sin usar reverse()
-    vector<char> caminoInvertido;
-    for (int i = camino.size() - 1; i >= 0; i--) {
-        caminoInvertido.push_back(camino[i]);
+    vector<char> recorridoSeverla;
+    for (int i = recorrido.size() - 1; i >= 0; i--) {
+        recorridoSeverla.push_back(recorrido[i]);
     }
 
-    return caminoInvertido;
+    int pesoTotal = distancia[fin->nombres.first - 'A'];
+    return {recorridoSeverla, pesoTotal};
 }
 
 int main() {
@@ -106,29 +106,43 @@ int main() {
     leerArch.close();
 
     vector<Nodo*> lista;
+    cout << "Nodos que se pueden visitar: " << endl;
     for (int i = 0; i < n; i++) {
         char nodo = 'A' + i;
         lista.push_back(new Nodo(nodo, 0));
-    }
+        cout<< nodo << " ";
+    }cout << endl;
 
     Nodo* arbol = armarArbol(n, matriz, lista);
 
     char final;
-    cout << "¿A dónde vamos? (camino de 'A' a " << char('A' + n - 1) << "): " << endl;
-    cin >> final;
+    int indice;
 
-    int indice = final - 'A';
+    while(true){
+        cout << "Donde vamos? (El camino empieza en A): " << endl;
+        cin >> final;
+        final = toupper(final);
+        indice = final - 'A';
 
-    if (indice >= n) {
-        cout << "Destino no válido" << endl;
-    } else {
-        vector<char> camino = dijkstra(lista[0], lista[indice], n);
-        cout << "Camino más corto de A a " << final << ": ";
-        for (char nodo : camino) {
-            cout << nodo << " ";
+        if (indice < n && indice >= 0) {
+            break;
+        } else {
+            cout << "Destino no válido" << endl;
         }
-        cout << endl;
     }
+
     
+    pair<vector<char>, int> resultado = dijkstra(lista[0], lista[indice], n);
+    vector<char> camino = resultado.first;
+    int pesoTotal = resultado.second;
+
+    cout << "Tiempo de viaje: " << pesoTotal << endl;
+
+    cout << "Camino más corto de A a " << final << ": ";
+    for (char nodo : camino) {
+        cout << nodo << " ";
+    }
+    cout << endl;
+        
     return 0;
 }
