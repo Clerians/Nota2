@@ -31,8 +31,8 @@ Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista) { //c
 }
 
 pair<vector<char>, int> dijkstra(Nodo* inicio, Nodo* fin, int n) {//algoritmo dijkstra
-    vector<int> distancia(n, 1000000);//guarda el indice y el peso
-    vector<Nodo*> visitados(n, nullptr);//guarda si el indice fue visitado
+    vector<int> distancia(n, 1000000);
+    vector<Nodo*> visitados(n, nullptr);
     distancia[inicio->nombres.first - 'A'] = 0;
     
     queue<Nodo*> cola;
@@ -66,7 +66,7 @@ pair<vector<char>, int> dijkstra(Nodo* inicio, Nodo* fin, int n) {//algoritmo di
     }
 
     int total = distancia[fin->nombres.first - 'A'];
-    return {recorridoSeverla, total};
+    return {recorridoSeverla, total};//devulve el camino y la distancia 
 }
 
 int main() {
