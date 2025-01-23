@@ -74,7 +74,7 @@ int main() {
     ifstream leerArch;
 
     while (true) {
-        cout << "Nombre del archivo (nombre.txt): " << endl;
+        cout << "Ingrese nombre del archivo (ej: matriz.txt): " << endl;
         cin >> nombre;
         leerArch.open(nombre);
 
