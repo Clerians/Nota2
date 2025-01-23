@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Nodo {
+class Nodo {//clase nodo
 public:
     pair<char, int> nombres;
     vector<pair<Nodo*, int>> vecinos;
@@ -17,7 +17,7 @@ public:
     }
 };
 
-Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista) {
+Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista) { //construye el arbol 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (matriz[i][j] > 0) {
@@ -30,9 +30,9 @@ Nodo* armarArbol(int n, vector<vector<int>>& matriz, vector<Nodo*>& lista) {
     return lista[0];
 }
 
-pair<vector<char>, int> dijkstra(Nodo* inicio, Nodo* fin, int n) {
-    vector<int> distancia(n, 1000000);
-    vector<Nodo*> visitados(n, nullptr);
+pair<vector<char>, int> dijkstra(Nodo* inicio, Nodo* fin, int n) {//algoritmo dijkstra
+    vector<int> distancia(n, 1000000);//guarda el indice y el peso
+    vector<Nodo*> visitados(n, nullptr);//guarda si el indice fue visitado
     distancia[inicio->nombres.first - 'A'] = 0;
     
     queue<Nodo*> cola;
@@ -65,15 +65,16 @@ pair<vector<char>, int> dijkstra(Nodo* inicio, Nodo* fin, int n) {
         recorridoSeverla.push_back(recorrido[i]);
     }
 
-    int pesoTotal = distancia[fin->nombres.first - 'A'];
-    return {recorridoSeverla, pesoTotal};
+    int total = distancia[fin->nombres.first - 'A'];
+    return {recorridoSeverla, total};
 }
 
 int main() {
+
     string nombre;
     ifstream leerArch;
 
-    while (true) {
+    while (true) {//ciclo por si se ingresa mal el nombre del archivo
         cout << "Ingrese nombre del archivo (ej: matriz.txt): " << endl;
         cin >> nombre;
         leerArch.open(nombre);
@@ -102,23 +103,22 @@ int main() {
             }
         }
     }
-
     leerArch.close();
 
     vector<Nodo*> lista;
     cout << "Nodos que se pueden visitar: " << endl;
     for (int i = 0; i < n; i++) {
         char nodo = 'A' + i;
-        lista.push_back(new Nodo(nodo, 0));
         cout<< nodo << " ";
+        lista.push_back(new Nodo(nodo, 0));//se crea los nodos
     }cout << endl;
 
-    Nodo* arbol = armarArbol(n, matriz, lista);
+    Nodo* arbol = armarArbol(n, matriz, lista);//crea el arbol con la matriz y la lista
 
     char final;
     int indice;
 
-    while(true){
+    while(true){//ciclo por si se ingresa una letra fuera del rango
         cout << "Donde vamos? (El camino empieza en A): " << endl;
         cin >> final;
         final = toupper(final);
@@ -131,16 +131,15 @@ int main() {
         }
     }
 
-    
-    pair<vector<char>, int> resultado = dijkstra(lista[0], lista[indice], n);
+    pair<vector<char>, int> resultado = dijkstra(lista[0], lista[indice], n);//llama la funcion dijkstra
     vector<char> camino = resultado.first;
-    int pesoTotal = resultado.second;
+    int total = resultado.second;
 
-    cout << "Tiempo de viaje: " << pesoTotal << endl;
+    cout << "Tiempo de viaje: " << total << endl;//print peso
 
     cout << "Camino más corto de A a " << final << ": ";
-    for (char nodo : camino) {
-        cout << nodo << " ";
+    for (int i = 0; i < camino.size(); i++) {//print camino 
+        cout << camino[i] << " ";
     }
     cout << endl;
         
